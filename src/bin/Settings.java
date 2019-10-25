@@ -17,7 +17,7 @@ public class Settings {
         separator = ",";
     }
 
-    public static String[] buttonOptions(){
+    public static String[] checkboxOptions(){
         return new String[]{"WHOLE_IMAGE", "BOUNDING_BOX", "GRAYSCALE", "CONVERT_TO_MATRIX"};
     }
 
