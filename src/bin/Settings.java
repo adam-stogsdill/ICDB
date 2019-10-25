@@ -14,7 +14,19 @@ public class Settings {
         BOUNDING_BOX = false;
         GRAYSCALE = false;
         CONVERT_TO_MATRIX  = false;
+        separator = ",";
     }
 
+    public static String[] buttonOptions(){
+        return new String[]{"WHOLE_IMAGE", "BOUNDING_BOX", "GRAYSCALE", "CONVERT_TO_MATRIX"};
+    }
+
+    public static void setOptionValue(String str, boolean value){
+
+    }
+
+    public static void setOptionValue(String str, String value){
+
+    }
 
 }

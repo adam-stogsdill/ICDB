@@ -13,6 +13,7 @@ public class Main {
         Window w = new Window();
 
 
+
         j.add(w);
         j.setTitle(title);
         j.setSize(WIDTH, HEIGHT);
