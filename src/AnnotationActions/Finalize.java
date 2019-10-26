@@ -14,6 +14,8 @@ import java.nio.file.Paths;
 import java.nio.file.Path;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
+import java.awt.color.ColorSpace;
+import java.awt.color.ColorConvertOp;
 
 
 public class Finalize {
@@ -58,6 +60,22 @@ public class Finalize {
     }
 
     private static void storeImage(File image, String category) throws IOException {
+        if (Settings.GRAYSCALE) {
+            BufferedImage grayImage = null;
+            try {
+                grayImage = ImageIO.read(image);
+            } catch (IOException e) {
+                System.out.println("Image file not found.");
+            }
+            ColorSpace cs = ColorSpace.getInstance(ColorSpace.CS_GRAY);  
+            ColorConvertOp op = new ColorConvertOp(cs, null);  
+            grayImage = op.filter(grayImage, null);
+            try {
+                ImageIO.write(grayImage, getFileExtension(image), image);
+            } catch (IOException e) {
+                System.err.println("Image file not found.");
+            }
+        }
         if (Settings.CONVERT_TO_MATRIX) {
             System.out.println("STORING IN CSV");
             // Store CSV files in category files
