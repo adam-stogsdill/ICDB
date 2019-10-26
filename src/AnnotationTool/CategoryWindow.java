@@ -21,18 +21,21 @@ public class CategoryWindow {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     if(Settings.BOUNDING_BOX){
-                        int x = WindowHandler.annotationWindow.topX;
-                        int y = WindowHandler.annotationWindow.topY;
-                        int width = WindowHandler.annotationWindow.bottomX - x;
-                        int height = WindowHandler.annotationWindow.bottomY - y;
+                        int x = WindowHandler.annotationWindow.temptX;
+                        int y = WindowHandler.annotationWindow.temptY;
+                        int width = WindowHandler.annotationWindow.tempbx - x;
+                        int height = WindowHandler.annotationWindow.tempby - y;
                         WindowHandler.singleAnnotation.addBox(new Box(x, y, width, height, c));
+                        System.out.printf("Adding Box: %d, %d ,%s \n", width, height, c);
                         if(!WindowHandler.getAnnotationSet().contains(WindowHandler.singleAnnotation)){
                             WindowHandler.annotationSet.add(WindowHandler.singleAnnotation);
                         }
+
                     }else {
                         WindowHandler.singleAnnotation.setCategory(c);
                         WindowHandler.annotationSet.add(WindowHandler.singleAnnotation);
                     }
+                    WindowHandler.currentJPanel.repaint();
                     j.dispose();
                 }
             });

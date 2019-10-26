@@ -23,6 +23,11 @@ public class AnnotationWindow{
     public int bottomX;
     public int bottomY;
 
+    public int temptX;
+    public int temptY;
+    public int tempbx;
+    public int tempby;
+
     public AnnotationWindow(File inputFileLocation, File outputFileLocation, boolean isDirectory){
         annotationFrame = new JFrame(inputFileLocation.getAbsolutePath());
         WindowHandler.setCurrentJFrame(annotationFrame);
@@ -57,6 +62,8 @@ public class AnnotationWindow{
                     creatingBox = true;
                     topX = e.getX();
                     topY = e.getY();
+                    temptX = topX;
+                    temptY = topY;
                 }
             }
 
@@ -66,7 +73,7 @@ public class AnnotationWindow{
                 bottomX = e.getX();
                 bottomY = e.getY();
 
-                System.out.printf("%d, %d, %d, %d", topX, topY, bottomX, bottomY);
+                System.out.printf("%d, %d, %d, %d\n", topX, topY, bottomX, bottomY);
 
                 configuration.repaint();
             }
@@ -82,21 +89,20 @@ public class AnnotationWindow{
             }
         });
 
-        configuration.addMouseMotionListener(new MouseMotionListener() {
+        this.configuration.addMouseMotionListener(new MouseMotionListener() {
             @Override
             public void mouseDragged(MouseEvent e) {
 
+                if(creatingBox) {
+                    tempbx = e.getX();
+                    tempby = e.getY();
+                    configuration.repaint();
+                }
             }
 
             @Override
             public void mouseMoved(MouseEvent e) {
-                System.out.println("Moving");
-                if(creatingBox){
-                    bottomX = e.getX();
-                    bottomY = e.getY();
 
-                    configuration.repaint();
-                }
             }
         });
 

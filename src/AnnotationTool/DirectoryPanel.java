@@ -47,9 +47,16 @@ public class DirectoryPanel extends JPanel {
         if(Settings.BOUNDING_BOX){
             ArrayList<bin.Box> boxes = WindowHandler.singleAnnotation.getBoxes();
             for(Box box: boxes){
+                System.out.println(box);
                 g.setColor(Color.GREEN);
-                g.drawRect(box.getX(), box.getY(), box.getHeight(), box.getWidth());
+                g.drawRect(box.getX(), box.getY(), box.getWidth(), box.getHeight());
             }
+        }
+
+        if(WindowHandler.annotationWindow.temptX != -1) {
+            g.setColor(Color.CYAN);
+            System.out.println((WindowHandler.annotationWindow.tempbx - WindowHandler.annotationWindow.temptX) + " " + (WindowHandler.annotationWindow.tempby - WindowHandler.annotationWindow.temptY));
+            g.drawRect(WindowHandler.annotationWindow.temptX, WindowHandler.annotationWindow.temptY, WindowHandler.annotationWindow.tempbx - WindowHandler.annotationWindow.temptX, WindowHandler.annotationWindow.tempby - WindowHandler.annotationWindow.temptY);
         }
     }
 

@@ -56,4 +56,9 @@ public class Box {
     public void setClassification(String classification) {
         this.classification = classification;
     }
+
+    @Override
+    public String toString() {
+        return this.x + " " + this.y + " " + this.getWidth() + " " + this.getHeight();
+    }
 }

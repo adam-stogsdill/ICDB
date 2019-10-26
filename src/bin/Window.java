@@ -132,8 +132,10 @@ public class Window extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 for(JCheckBox jCheckBox: checkBoxesArrayList){
+                    System.out.println(jCheckBox.getText());
                     Settings.setOptionValue(jCheckBox.getText(), jCheckBox.isSelected());
                 }
+
 
                 if(!selectedInputFile){
                     JOptionPane.showMessageDialog(continueButton, "A FILE HAS NOT BEEN SELECTED!", "File Selection Error",
