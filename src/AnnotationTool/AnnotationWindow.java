@@ -90,7 +90,6 @@ public class AnnotationWindow{
 
             @Override
             public void mouseMoved(MouseEvent e) {
-                System.out.println("Moving");
                 if(creatingBox){
                     bottomX = e.getX();
                     bottomY = e.getY();
