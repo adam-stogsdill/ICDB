@@ -101,6 +101,7 @@ class ImageHandler {
                 case FLIP_VERTICAL:
                     newPixels[newWidth - pHeight - 1][col] = pixels[row][col];
                     break;
+                }
             }
         }
         return newPixels;
