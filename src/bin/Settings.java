@@ -27,8 +27,21 @@ public class Settings {
     }
 
     public static void setOptionValue(String str, boolean value){
-
+        switch(str.toLowerCase().replaceAll(" ", "")){
+            case "wholeimage":  WHOLE_IMAGE = value;
+                                break;
+            case "boundingbox": BOUNDING_BOX = value;
+                                break;
+            case "grayscale":   GRAYSCALE = value;
+                                break;
+            case "converttomatrix": CONVERT_TO_MATRIX = value;
+                                break;
+            default:    System.out.println("INVALID SETTING CALLED");
+                        break;
+        }
     }
+
+
 
     public static void setOptionValue(String str, String value){
 
