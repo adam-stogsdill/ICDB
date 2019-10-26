@@ -1,0 +1,11 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "CodeLens (Launch) - Main",
+            "request": "launch",
+            "mainClass": "bin.Main",
+            "projectName": "ICDB_7b761d50"
+        }
+    ]
+}
