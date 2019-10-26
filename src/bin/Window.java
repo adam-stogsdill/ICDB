@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
@@ -27,11 +28,30 @@ public class Window extends JPanel {
         this.checkBoxesArrayList = new ArrayList<>();
         this.jButtonArrayList = new ArrayList<>();
 
+        Font customFont = null;
+        Font continueFont = null;
+        try {
+            //create the font to use. Specify the size!
+            customFont = Font.createFont(Font.TRUETYPE_FONT, new File("./font/rockwen.ttf")).deriveFont(12f);
+            continueFont = Font.createFont(Font.TRUETYPE_FONT, new File("./font/rockwen.ttf")).deriveFont(30f);
+            GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            //register the font
+            ge.registerFont(customFont);
+            ge.registerFont(continueFont);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch(FontFormatException e) {
+            e.printStackTrace();
+        }
+
         JFileChooser jfileChooserInput = new JFileChooser();
         jfileChooserInput.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 
         JPanel NORTH = new DrawNorthPanel();
         NORTH.repaint();
+
+        JPanel Center = new DrawCenterPanel();
+        Center.repaint();
 
         fileButton = new JButton("Choose Input File/Folder");
         fileButton.addActionListener(new ActionListener() {
@@ -117,6 +137,7 @@ public class Window extends JPanel {
             JCheckBox jb = new JCheckBox(option);
             checkBoxJPanel.add(jb);
             this.checkBoxesArrayList.add(jb);
+            jb.setFont(customFont);
         }
 
         JButton separator = new JButton("Select Separator");
@@ -128,6 +149,7 @@ public class Window extends JPanel {
             }
         });
         checkBoxJPanel.add(separator);
+        separator.setFont(customFont);
 
         JPanel buttonPanel = new JPanel();
         GridLayout buttonGridLayout = new GridLayout(2,4);
@@ -135,12 +157,17 @@ public class Window extends JPanel {
         for(String buttonOptions: Settings.buttonOptions()){
             JButton jb = new JButton(buttonOptions);
             buttonPanel.add(jb);
+            jb.setFont(customFont);
         }
         buttonPanel.add(fileButton);
         buttonPanel.add(outputfileButton);
 
+        fileButton.setFont(customFont);
+        outputfileButton.setFont(customFont);
+
         System.out.println("ADDING CONTINUE BUTTON");
         continueButton = new JButton("Continue");
+        continueButton.setFont(continueFont);
         continueButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -172,10 +199,12 @@ public class Window extends JPanel {
         this.add(checkBoxJPanel);
         this.add(buttonPanel);
         this.add(NORTH);
+        this.add(Center);
         parent_bl.addLayoutComponent(continueButton, BorderLayout.SOUTH);
         parent_bl.addLayoutComponent(checkBoxJPanel, BorderLayout.WEST);
         parent_bl.addLayoutComponent(buttonPanel, BorderLayout.EAST);
         parent_bl.addLayoutComponent(NORTH, BorderLayout.NORTH);
+        parent_bl.addLayoutComponent(Center, BorderLayout.CENTER);
         this.setLayout(parent_bl);
 
 
