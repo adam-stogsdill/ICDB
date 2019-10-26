@@ -66,6 +66,9 @@ public class AnnotationWindow{
         southPanel.add(doneButton);
         southPanel.add(annotateButton);
         annotationFrame.add(southPanel, BorderLayout.SOUTH);
+        annotationFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        annotationFrame.setUndecorated(true);
+        annotationFrame.setVisible(true);
         annotationFrame.setVisible(true);
 
     }
