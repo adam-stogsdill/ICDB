@@ -21,6 +21,8 @@ public class Annotation {
         this.boxes = boxes;
     }
 
+
+
     public void addBox(Box box) {
         boxes.add(box);
     }

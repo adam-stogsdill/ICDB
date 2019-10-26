@@ -1,21 +1,37 @@
 package AnnotationTool;
 
 import javax.swing.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.io.File;
 
-public class AnnotationWindow implements MouseListener, KeyListener {
+public class AnnotationWindow{
 
     private JPanel configuration;
     private File file_location;
 
     public AnnotationWindow(File f, boolean isDirectory){
         JFrame annotationFrame = new JFrame(f.getAbsolutePath());
+        annotationFrame.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(!isDirectory && e.getKeyCode() == KeyEvent.VK_ENTER){
+                    System.out.println("ANNOTATION OF SINGLE IMAGE!");
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
         annotationFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         annotationFrame.setSize(100,100);
+        this.file_location = f;
         // If the file is a directory(folder) then load the specific configuration.
         System.out.println("LOADING CONFIGURATION FROM FILE/DIRECTORY");
         if(isDirectory)
@@ -40,45 +56,4 @@ public class AnnotationWindow implements MouseListener, KeyListener {
         this.configuration = new SingleFilePanel(this.file_location);
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-        if(e.getKeyCode() == KeyEvent.VK_ENTER){
-            System.out.println("ANNOTATION OF SINGLE IMAGE!");
-        }
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
-    }
 }

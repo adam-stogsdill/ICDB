@@ -19,6 +19,8 @@ public class Window extends JPanel {
     boolean selectedInputFile;
 
     public Window(){
+        BorderLayout parent_bl = new BorderLayout();
+        GridLayout bl = new GridLayout(5, 10);
         this.checkBoxesArrayList = new ArrayList<>();
         this.jButtonArrayList = new ArrayList<>();
 
@@ -36,27 +38,30 @@ public class Window extends JPanel {
             }
         });
 
+        JPanel checkBoxJPanel = new JPanel();
+        checkBoxJPanel.setLayout(bl);
         for(String option: Settings.checkboxOptions()){
             JCheckBox jb = new JCheckBox(option);
-            checkBoxesArrayList.add(jb);
+            checkBoxJPanel.add(jb);
         }
 
+
+        JPanel buttonPanel = new JPanel();
+        GridLayout buttonGridLayout = new GridLayout(2,4);
+        buttonPanel.setLayout(buttonGridLayout);
         for(String buttonOptions: Settings.buttonOptions()){
             JButton jb = new JButton(buttonOptions);
-            jButtonArrayList.add(jb);
+            buttonPanel.add(jb);
         }
+        buttonPanel.add(fileButton);
 
-        this.add(fileButton);
 
-        System.out.println("ADDING CHECKBOX OBJECTS");
-        for(JCheckBox checkbox: this.checkBoxesArrayList){
-            this.add(checkbox);
-        }
 
-        System.out.println("ADDING BUTTON OBJECTS");
+        /*System.out.println("ADDING BUTTON OBJECTS");
         for(JButton jButton: this.jButtonArrayList){
-            this.add(jButton);
-        }
+            this.add(jButton, BorderLayout.EAST);
+            parent_bl.addLayoutComponent(jButton, BorderLayout.EAST);
+        }*/
 
         System.out.println("ADDING CONTINUE BUTTON");
         continueButton = new JButton("Continue");
@@ -76,7 +81,17 @@ public class Window extends JPanel {
             }
         });
 
+
+
         this.add(continueButton);
+        this.add(checkBoxJPanel);
+        this.add(buttonPanel);
+        parent_bl.addLayoutComponent(continueButton, BorderLayout.SOUTH);
+        parent_bl.addLayoutComponent(checkBoxJPanel, BorderLayout.WEST);
+        parent_bl.addLayoutComponent(buttonPanel, BorderLayout.EAST);
+        this.setLayout(parent_bl);
+
+
     }
 
 }
