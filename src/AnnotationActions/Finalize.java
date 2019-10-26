@@ -59,7 +59,11 @@ public class Finalize {
             System.out.println("STORING IN CSV");
             // Store CSV files in category files
             Path categoryFolder = Paths.get(Settings.outputLocation + "/" + category + "/");
-            String name = image.getName().substring(9, image.getName().indexOf("."));
+            int extensionIndex = image.getName().indexOf('.');
+            String name = image.getName();
+            if (extensionIndex > 0) {
+                name = name.substring(0, image.getName().indexOf("."));
+            }
             File csvFile = new File(categoryFolder.toAbsolutePath().toString() + "/" + name + ".csv");
             writeImageToCSV(image, csvFile);
         } else {
