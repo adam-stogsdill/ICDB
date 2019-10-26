@@ -8,43 +8,112 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Window extends JPanel {
 
     private ArrayList<JCheckBox> checkBoxesArrayList;
     private ArrayList<JButton> jButtonArrayList;
     private JButton fileButton;
+    private JButton outputfileButton;
     private JButton continueButton;
     private File projectInputFile;
-    boolean selectedInputFile;
+    private File projectOutputFile;
+    private boolean selectedInputFile;
+    private boolean selectedOutputFile;
 
-    public Window(){
+    Window(){
         BorderLayout parent_bl = new BorderLayout();
-        GridLayout bl = new GridLayout(5, 10);
         this.checkBoxesArrayList = new ArrayList<>();
         this.jButtonArrayList = new ArrayList<>();
 
-        JFileChooser jfc = new JFileChooser();
-        jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        JFileChooser jfileChooserInput = new JFileChooser();
+        jfileChooserInput.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 
-        fileButton = new JButton("Choose File/Folder");
+        fileButton = new JButton("Choose Input File/Folder");
         fileButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                int returnVal = jfc.showOpenDialog(fileButton);
-                projectInputFile = jfc.getSelectedFile();
-                System.out.println(projectInputFile.getAbsolutePath() + " has been choosen!");
-                selectedInputFile = true;
+                int returnVal = jfileChooserInput.showOpenDialog(fileButton);
+                projectInputFile = jfileChooserInput.getSelectedFile();
+                System.out.println(projectInputFile.getAbsolutePath() + " has been chosen!");
+                if(projectInputFile != null)
+                    selectedInputFile = true;
+            }
+        });
+
+        JFileChooser jfileChooserOutput = new JFileChooser();
+        jfileChooserOutput.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+
+        outputfileButton = new JButton("Choose Output Folder");
+        outputfileButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                StringBuilder preParsedCategoryString = new StringBuilder();
+                int returnVal = jfileChooserOutput.showOpenDialog(outputfileButton);
+                projectOutputFile = jfileChooserOutput.getSelectedFile();
+                System.out.println(projectOutputFile.getAbsolutePath() + " has been chosen!");
+                if(projectOutputFile != null) {
+                    selectedOutputFile = true;
+                    if(Objects.requireNonNull(projectOutputFile.list()).length != 0){
+                        StringBuilder categoryString = new StringBuilder();
+                        String[] list = projectOutputFile.list();
+
+                        assert list != null;
+                        for(String l: list){
+                            categoryString.append(l).append("\n");
+                        }
+
+                        int input = JOptionPane.showConfirmDialog(outputfileButton,
+                                "Are these your categories? \n" + categoryString, "Category Detection",
+                                         JOptionPane.YES_NO_OPTION);
+
+                        if(input == JOptionPane.YES_OPTION)
+                            Settings.CATEGORIES = list;
+                        else{
+                            int yn = JOptionPane.showConfirmDialog(outputfileButton,
+                                    "Would you like to set categories now?", "File Selection Error",
+                                    JOptionPane.YES_NO_OPTION);
+                            while(yn == JOptionPane.YES_OPTION){
+
+                                String categoryInput = JOptionPane.showInputDialog(outputfileButton,
+                                        "Enter \"Done\" when you have completed entering Categories.");
+                                if(categoryInput.toUpperCase().equals("DONE")){
+                                    Settings.setCATEGORIES(preParsedCategoryString.toString().split(","));
+                                    String[] cats = preParsedCategoryString.toString().split(",");
+                                    System.out.println("CATEGORIES: " + preParsedCategoryString);
+                                    break;
+                                }
+                                preParsedCategoryString.append(categoryInput).append(",");
+                            }
+                        }
+                    }
+                }else{
+                    int yn = JOptionPane.showConfirmDialog(outputfileButton,
+                            "Would you like to set categories now?", "File Selection Error",
+                            JOptionPane.YES_NO_OPTION);
+                    while(yn == JOptionPane.YES_OPTION) {
+                        String categoryInput = JOptionPane.showInputDialog(outputfileButton,
+                                "Enter \"Done\" when you have completed entering Categories.");
+                        if (categoryInput.toUpperCase().equals("DONE")) {
+                            Settings.setCATEGORIES(preParsedCategoryString.toString().split(","));
+                            String[] cats = preParsedCategoryString.toString().split(",");
+                            System.out.println("CATEGORIES: ");
+                            break;
+                        }
+                        preParsedCategoryString.append(categoryInput).append(",");
+                    }
+                }
             }
         });
 
         JPanel checkBoxJPanel = new JPanel();
+        GridLayout bl = new GridLayout(5, 2);
         checkBoxJPanel.setLayout(bl);
         for(String option: Settings.checkboxOptions()){
             JCheckBox jb = new JCheckBox(option);
             checkBoxJPanel.add(jb);
         }
-
 
         JPanel buttonPanel = new JPanel();
         GridLayout buttonGridLayout = new GridLayout(2,4);
@@ -54,14 +123,7 @@ public class Window extends JPanel {
             buttonPanel.add(jb);
         }
         buttonPanel.add(fileButton);
-
-
-
-        /*System.out.println("ADDING BUTTON OBJECTS");
-        for(JButton jButton: this.jButtonArrayList){
-            this.add(jButton, BorderLayout.EAST);
-            parent_bl.addLayoutComponent(jButton, BorderLayout.EAST);
-        }*/
+        buttonPanel.add(outputfileButton);
 
         System.out.println("ADDING CONTINUE BUTTON");
         continueButton = new JButton("Continue");
@@ -76,7 +138,8 @@ public class Window extends JPanel {
                     JOptionPane.showMessageDialog(continueButton, "A FILE HAS NOT BEEN SELECTED!", "File Selection Error",
                             JOptionPane.WARNING_MESSAGE);
                 }else {
-                    new AnnotationWindow(projectInputFile, projectInputFile.isDirectory());
+                    Settings.setOutputLocation(projectOutputFile);
+                    new AnnotationWindow(projectInputFile, projectOutputFile, projectInputFile.isDirectory());
                 }
             }
         });
