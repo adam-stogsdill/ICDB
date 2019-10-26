@@ -9,7 +9,10 @@ public class Main {
     public static String title = "ICDB";
 
     public static void main(String[] args){
-        JFrame j = new JFrame();
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {}
+        JFrame j = new JFrame("System Look and Feel");
         Window w = new Window();
 
         j.add(w);
