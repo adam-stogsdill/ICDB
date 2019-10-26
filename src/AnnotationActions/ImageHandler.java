@@ -17,20 +17,7 @@ class ImageHandler {
         int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
         int[][] pixels2D = makePixels2D(pixels, image.getWidth());
 
-        switch (direction) {
-        case CLOCKWISE:
-            pixels2D = rotateClockwise(pixels2D);
-            break;
-        case COUNTER_CLOCKWISE:
-            pixels2D = rotateCounterClockwise(pixels2D);
-            break;
-        case FLIP_HORIZONTAL:
-            pixels2D = flipHorizontally(pixels2D);
-            break;
-        case FLIP_VERTICAL:
-            pixels2D = flipVertically(pixels2D);
-            break;
-        }
+        pixels2D = rotatePixels(pixels2D, direction);
 
         return createImage(pixels2D);
     }
@@ -92,7 +79,7 @@ class ImageHandler {
         return isGrayscale;
     }
 
-    private int[][] rotateClockwise(int[][] pixels) {
+    private int[][] rotatePixels(int[][] pixels, Direction direction) {
         int pWidth = pixels.length;
         int pHeight = pixels[0].length;
         int newWidth = pHeight;
@@ -101,56 +88,24 @@ class ImageHandler {
 
         for (int row = 0; row < pHeight; row++) {
             for (int col = 0; col < pWidth; col++) {
-                newPixels[col][newWidth - row - 1] = pixels[row][col];
+                switch (direction) {
+                case CLOCKWISE:
+                    newPixels[col][newWidth - row - 1] = pixels[row][col];
+                    break;
+                case COUNTER_CLOCKWISE:
+                    newPixels[newWidth - row - 1][col] = pixels[col][row];
+                    break;
+                case FLIP_HORIZONTAL:
+                    newPixels[col][newWidth - row - 1] = pixels[col][row];
+                    break;
+                case FLIP_VERTICAL:
+                    newPixels[newWidth - pHeight - 1][col] = pixels[row][col];
+                    break;
             }
         }
         return newPixels;
     }
 
-    private int[][] rotateCounterClockwise(int[][] pixels) {
-        int pWidth = pixels.length;
-        int pHeight = pixels[0].length;
-        int newWidth = pHeight;
-        int newHeight = pWidth;
-        int[][] newPixels = new int[newWidth][newHeight];
-
-        for (int row = 0; row < pHeight; row++) {
-            for (int col = 0; col < pWidth; col++) {
-                newPixels[newWidth - row - 1][col] = pixels[col][row];
-            }
-        }
-        return newPixels;
-    }
-
-    private int[][] flipHorizontally(int[][] pixels) {
-        int pWidth = pixels.length;
-        int pHeight = pixels[0].length;
-        int newWidth = pHeight;
-        int newHeight = pWidth;
-        int[][] newPixels = new int[newWidth][newHeight];
-
-        for (int row = 0; row < pHeight; row++) {
-            for (int col = 0; col < pWidth; col++) {
-                newPixels[col][newWidth - row - 1] = pixels[col][row];
-            }
-        }
-        return newPixels;
-    }
-
-    private int[][] flipVertically(int[][] pixels) {
-        int pWidth = pixels.length;
-        int pHeight = pixels[0].length;
-        int newWidth = pHeight;
-        int newHeight = pWidth;
-        int[][] newPixels = new int[newWidth][newHeight];
-
-        for (int row = 0; row < pHeight; row++) {
-            for (int col = 0; col < pWidth; col++) {
-                newPixels[newWidth - pHeight - 1][col] = pixels[row][col];
-            }
-        }
-        return newPixels;
-    }
 
     private BufferedImage createImage(int[][] pixels) {
         int pWidth = pixels.length;
