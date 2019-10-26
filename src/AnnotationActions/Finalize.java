@@ -5,6 +5,7 @@ import bin.Annotation;
 import bin.Box;
 import bin.Settings;
 
+import java.awt.image.ColorConvertOp;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.FileWriter;
@@ -15,7 +16,7 @@ import java.nio.file.Path;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.awt.color.ColorSpace;
-import java.awt.color.ColorConvertOp;
+
 
 
 public class Finalize {
@@ -68,7 +69,7 @@ public class Finalize {
                 System.out.println("Image file not found.");
             }
             ColorSpace cs = ColorSpace.getInstance(ColorSpace.CS_GRAY);  
-            ColorConvertOp op = new ColorConvertOp(cs, null);  
+            ColorConvertOp op = new ColorConvertOp(cs, null);
             grayImage = op.filter(grayImage, null);
             try {
                 ImageIO.write(grayImage, getFileExtension(image), image);

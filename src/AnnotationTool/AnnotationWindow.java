@@ -58,7 +58,7 @@ public class AnnotationWindow{
 
             @Override
             public void mousePressed(MouseEvent e) {
-                if(!creatingBox){
+                if(!creatingBox && !Settings.WHOLE_IMAGE){
                     creatingBox = true;
                     topX = e.getX();
                     topY = e.getY();
@@ -93,7 +93,7 @@ public class AnnotationWindow{
             @Override
             public void mouseDragged(MouseEvent e) {
 
-                if(creatingBox) {
+                if(creatingBox && !Settings.WHOLE_IMAGE) {
                     tempbx = e.getX();
                     tempby = e.getY();
                     configuration.repaint();
