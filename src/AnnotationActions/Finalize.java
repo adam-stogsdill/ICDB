@@ -37,14 +37,17 @@ public class Finalize {
                 ArrayList<Box> boxes = a.getBoxes();
                 BufferedImage subImage = null;
                 for (Box box : boxes) {
-                    subImage = image.getSubimage(box.getX(), box.getY(), box.getWidth(), box.getHeight());
-                    storeImage(subImage, box.getClassification(), getFileExtension(a.getImage())); // Classification is category
+                    if (box.getWidth() > 0 && box.getHeight() > 0) {
+                        subImage = image.getSubimage(box.getX(), box.getY(), box.getWidth(), box.getHeight());
+                        storeImage(subImage, box.getClassification(), getFileExtension(a.getImage())); // Classification is category
+                    }
                 }
             }
         }
     }
 
     private static void storeImage(BufferedImage image, String category, String fileExtension) throws IOException {
+        System.out.println(fileExtension);
         File imgFile = File.createTempFile("imageBuffer", fileExtension);
         ImageIO.write(image, fileExtension, imgFile);
         storeImage(imgFile, category);
@@ -56,7 +59,11 @@ public class Finalize {
             System.out.println("STORING IN CSV");
             // Store CSV files in category files
             Path categoryFolder = Paths.get(Settings.outputLocation + "/" + category + "/");
-            String name = image.getName().substring(9, image.getName().indexOf("."));
+            int extensionIndex = image.getName().indexOf('.');
+            String name = image.getName();
+            if (extensionIndex > 0) {
+                name = name.substring(0, image.getName().indexOf("."));
+            }
             File csvFile = new File(categoryFolder.toAbsolutePath().toString() + "/" + name + ".csv");
             writeImageToCSV(image, csvFile);
         } else {
@@ -89,7 +96,7 @@ public class Finalize {
                 rgbValues = "("; 
                 for (int z = 0; z < depth - 1; z++) {
                     rgbValues += pixelData[x][y][z];
-                    rgbValues += ',';
+                    rgbValues += ' ';
                 }
                 rgbValues += pixelData[x][y][depth - 1];
                 rgbValues += ')';

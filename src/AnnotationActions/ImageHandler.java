@@ -30,8 +30,8 @@ class ImageHandler {
         int[][][] matrix = new int[width][height][depth];
 
         int pixel, red, green, blue;
-        for (int row = 0; row < height; row++) {
-            for (int col = 0; col < width; col++) {
+        for (int col = 0; col < height; col++) {
+            for (int row = 0; row < width; row++) {
                 pixel = image.getRGB(row, col);
 
                 if (isGrayscale) {
@@ -59,8 +59,8 @@ class ImageHandler {
         boolean isGrayscale = true;
         int pixel, red, green, blue;
         // Check if all RGB values are the same
-        for (int row = 0; row < image.getHeight(); row++) {
-            for (int col = 0; col < image.getWidth(); col++) {
+        for (int col = 0; col < image.getHeight(); col++) {
+            for (int row = 0; row < image.getWidth(); row++) {
                 pixel = image.getRGB(row, col);
                 red = (pixel >> 16) & 0xff;
                 green = (pixel >> 8) & 0xff;

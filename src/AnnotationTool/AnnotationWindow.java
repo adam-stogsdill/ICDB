@@ -102,7 +102,7 @@ public class AnnotationWindow{
 
             @Override
             public void mouseMoved(MouseEvent e) {
-
+                
             }
         });
 
