@@ -51,7 +51,10 @@ public class Finalize {
         File imgFile = File.createTempFile("imageBuffer", fileExtension);
         ImageIO.write(image, fileExtension, imgFile);
         storeImage(imgFile, category);
-        imgFile.delete();
+        if(Settings.CONVERT_TO_MATRIX) {
+            boolean deleted = imgFile.delete();
+            System.out.println("File Deleted? :" + deleted);
+        }
     }
 
     private static void storeImage(File image, String category) throws IOException {
