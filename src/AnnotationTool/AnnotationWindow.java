@@ -150,6 +150,8 @@ public class AnnotationWindow{
             }
         });
 
+
+
         JButton annotateButton = new JButton("Annotate");
         annotateButton.addActionListener(new ActionListener() {
             @Override

@@ -123,7 +123,7 @@ public class Finalize {
                 rgbValues += pixelData[x][y][depth - 1];
                 rgbValues += ')';
                 
-                csvWriter.append(rgbValues + ',');
+                csvWriter.append(rgbValues + Settings.separator);
             }
             csvWriter.append('\n');
         }

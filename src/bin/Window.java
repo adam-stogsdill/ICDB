@@ -30,6 +30,9 @@ public class Window extends JPanel {
         JFileChooser jfileChooserInput = new JFileChooser();
         jfileChooserInput.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 
+        JPanel NORTH = new DrawNorthPanel();
+        NORTH.repaint();
+
         fileButton = new JButton("Choose Input File/Folder");
         fileButton.addActionListener(new ActionListener() {
             @Override
@@ -116,6 +119,16 @@ public class Window extends JPanel {
             this.checkBoxesArrayList.add(jb);
         }
 
+        JButton separator = new JButton("Select Separator");
+        separator.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Settings.separator = JOptionPane.showInputDialog("Separator: ");
+
+            }
+        });
+        checkBoxJPanel.add(separator);
+
         JPanel buttonPanel = new JPanel();
         GridLayout buttonGridLayout = new GridLayout(2,4);
         buttonPanel.setLayout(buttonGridLayout);
@@ -158,9 +171,11 @@ public class Window extends JPanel {
         this.add(continueButton);
         this.add(checkBoxJPanel);
         this.add(buttonPanel);
+        this.add(NORTH);
         parent_bl.addLayoutComponent(continueButton, BorderLayout.SOUTH);
         parent_bl.addLayoutComponent(checkBoxJPanel, BorderLayout.WEST);
         parent_bl.addLayoutComponent(buttonPanel, BorderLayout.EAST);
+        parent_bl.addLayoutComponent(NORTH, BorderLayout.NORTH);
         this.setLayout(parent_bl);
 
 
