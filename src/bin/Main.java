@@ -12,8 +12,6 @@ public class Main {
         JFrame j = new JFrame();
         Window w = new Window();
 
-
-
         j.add(w);
         j.setTitle(title);
         j.setSize(WIDTH, HEIGHT);

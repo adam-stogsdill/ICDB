@@ -7,6 +7,7 @@ public class Settings {
     public static boolean GRAYSCALE;
     public static boolean CONVERT_TO_MATRIX;
     public static String separator = ",";
+    public static String fileLocation = "";
 
 
     public static void fullResetValues(){
@@ -18,7 +19,11 @@ public class Settings {
     }
 
     public static String[] checkboxOptions(){
-        return new String[]{"WHOLE_IMAGE", "BOUNDING_BOX", "GRAYSCALE", "CONVERT_TO_MATRIX"};
+        return new String[]{"WHOLE IMAGE", "BOUNDING BOX", "GRAYSCALE", "CONVERT TO MATRIX"};
+    }
+
+    public static String[] buttonOptions(){
+        return new String[]{"TEST_BUTTON"};
     }
 
     public static void setOptionValue(String str, boolean value){
