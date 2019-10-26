@@ -113,6 +113,7 @@ public class Window extends JPanel {
         for(String option: Settings.checkboxOptions()){
             JCheckBox jb = new JCheckBox(option);
             checkBoxJPanel.add(jb);
+            this.checkBoxesArrayList.add(jb);
         }
 
         JPanel buttonPanel = new JPanel();
@@ -137,7 +138,13 @@ public class Window extends JPanel {
                 if(!selectedInputFile){
                     JOptionPane.showMessageDialog(continueButton, "A FILE HAS NOT BEEN SELECTED!", "File Selection Error",
                             JOptionPane.WARNING_MESSAGE);
-                }else {
+                }else if(!Settings.WHOLE_IMAGE && !Settings.BOUNDING_BOX){
+                    JOptionPane.showMessageDialog(continueButton, "Either BoundingBox or Whole Image must be selected!", "File Selection Error",
+                            JOptionPane.WARNING_MESSAGE);
+                }else if(Settings.WHOLE_IMAGE && Settings.BOUNDING_BOX) {
+                    JOptionPane.showMessageDialog(continueButton, "BoundingBox and Whole Image cannot be selected at the same time!", "File Selection Error",
+                            JOptionPane.WARNING_MESSAGE);
+                }else{
                     Settings.setOutputLocation(projectOutputFile);
                     new AnnotationWindow(projectInputFile, projectOutputFile, projectInputFile.isDirectory());
                 }

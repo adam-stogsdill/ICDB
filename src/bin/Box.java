@@ -5,10 +5,6 @@ public class Box {
     private int x, y, width, height;
     private String classification;
 
-    public Box() {
-        initialize(0, 0, 0, 0, "");
-    }
-
     public Box(int x, int y, int width, int height, String classification) {
         initialize(x, y, width, height, classification);
     }

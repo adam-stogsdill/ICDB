@@ -30,6 +30,7 @@ public class Settings {
     }
 
     public static void setOptionValue(String str, boolean value){
+        System.out.println(str.toLowerCase().replaceAll(" ", "").toString());
         switch(str.toLowerCase().replaceAll(" ", "")){
             case "wholeimage":  WHOLE_IMAGE = value;
                                 break;

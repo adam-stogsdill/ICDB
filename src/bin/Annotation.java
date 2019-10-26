@@ -9,7 +9,7 @@ public class Annotation {
     private ArrayList<Box> boxes;
 
     // Allow single category for images without need for Bounding Boxes
-    private String category;
+    private String category = "";
 
     public Annotation(File image) {
         initialize(image, new ArrayList<Box>());
@@ -23,8 +23,6 @@ public class Annotation {
         this.image = image;
         this.boxes = boxes;
     }
-
-
 
     public void addBox(Box box) {
         boxes.add(box);

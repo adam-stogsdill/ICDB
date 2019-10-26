@@ -1,17 +1,19 @@
 package AnnotationTool;
 
 import bin.Annotation;
+import bin.Settings;
+import bin.Box;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
-public class SingleFilePanel extends JPanel {
+public class SingleFilePanel extends JPanel  {
 
     private File image;
     Annotation annotation;
@@ -35,6 +37,20 @@ public class SingleFilePanel extends JPanel {
             e.printStackTrace();
         }
         g.drawImage(bufferedImage, 0, 0, null);
-        WindowHandler.setSize(bufferedImage.getWidth(null), bufferedImage.getHeight(null) + 50);
+
+        if(Settings.BOUNDING_BOX){
+            ArrayList<Box> boxes = WindowHandler.singleAnnotation.getBoxes();
+            for(Box box: boxes){
+                g.setColor(Color.GREEN);
+                g.drawRect(box.getX(), box.getY(), box.getHeight(), box.getWidth());
+            }
+        }
+
+        if(WindowHandler.annotationWindow.creatingBox){
+            g.setColor(Color.CYAN);
+            g.drawRect(WindowHandler.annotationWindow.topX, WindowHandler.annotationWindow.topY, WindowHandler.annotationWindow.bottomX - WindowHandler.annotationWindow.topX, WindowHandler.annotationWindow.bottomY - WindowHandler.annotationWindow.topY);
+        }
     }
+
+
 }

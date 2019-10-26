@@ -1,10 +1,11 @@
 package AnnotationTool;
 
+import bin.Settings;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.Queue;
+import bin.Box;
 
 public class CategoryWindow {
 
@@ -19,8 +20,19 @@ public class CategoryWindow {
             temp.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    WindowHandler.singleAnnotation.setCategory(c);
-                    WindowHandler.annotationSet.add(WindowHandler.singleAnnotation);
+                    if(Settings.BOUNDING_BOX){
+                        int x = WindowHandler.annotationWindow.topX;
+                        int y = WindowHandler.annotationWindow.topY;
+                        int width = WindowHandler.annotationWindow.bottomX - x;
+                        int height = WindowHandler.annotationWindow.bottomY - y;
+                        WindowHandler.singleAnnotation.addBox(new Box(x, y, width, height, c));
+                        if(!WindowHandler.getAnnotationSet().contains(WindowHandler.singleAnnotation)){
+                            WindowHandler.annotationSet.add(WindowHandler.singleAnnotation);
+                        }
+                    }else {
+                        WindowHandler.singleAnnotation.setCategory(c);
+                        WindowHandler.annotationSet.add(WindowHandler.singleAnnotation);
+                    }
                     j.dispose();
                 }
             });

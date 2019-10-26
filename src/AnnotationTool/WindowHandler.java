@@ -13,11 +13,16 @@ public class WindowHandler {
     static Set<Annotation> annotationSet = new HashSet<>();
     static CategoryWindow workingCategoryWindow;
     static Annotation singleAnnotation;
-
+    static AnnotationWindow annotationWindow;
+    static JPanel currentJPanel;
 
     public static void setCurrentJFrame(JFrame frame){
         currentJFrame = frame;
     }
+
+    public static void setCurrentJPanel(JPanel jp) { currentJPanel = jp; }
+
+    public static void setAnnotationWindow(AnnotationWindow aw) { annotationWindow = aw; }
 
     public static void setWorkingCategoryWindow(CategoryWindow cw){
         workingCategoryWindow = cw;

@@ -67,7 +67,6 @@ Dense Layer
 
 Output Layer
 [number of categories, softmax activation function]
-
 """
 
 model = tf.keras.models.Sequential([
