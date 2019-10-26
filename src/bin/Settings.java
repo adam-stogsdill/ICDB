@@ -1,5 +1,7 @@
 package bin;
 
+import java.io.File;
+
 public class Settings {
 
     public static boolean WHOLE_IMAGE;
@@ -9,6 +11,7 @@ public class Settings {
     public static String separator = ",";
     public static String fileLocation = "";
     public static String[] CATEGORIES;
+    public static File outputLocation;
 
     public static void fullResetValues(){
         WHOLE_IMAGE = false;
@@ -48,4 +51,8 @@ public class Settings {
     }
 
     public static void setCATEGORIES(String[] categories) {CATEGORIES = categories;}
+
+    public static void setOutputLocation(File ol){
+        outputLocation = ol;
+    }
 }

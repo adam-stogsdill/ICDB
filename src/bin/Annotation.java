@@ -8,6 +8,9 @@ public class Annotation {
     private File image;
     private ArrayList<Box> boxes;
 
+    // Allow single category for images without need for Bounding Boxes
+    private String category;
+
     public Annotation(File image) {
         initialize(image, new ArrayList<Box>());
     }
@@ -51,4 +54,14 @@ public class Annotation {
         this.boxes = boxes;
     }
 
+    public void setCategory(String category) {this.category = category;}
+
+    public String getCategory() { return this.category; }
+
+    @Override
+    public String toString(){
+        if(this.boxes.size() == 0)
+            return this.image.getName() + " -> classified as -> " + this.category;
+        return "";
+    }
 }

@@ -15,10 +15,13 @@ public class SingleFilePanel extends JPanel {
 
     private File image;
     Annotation annotation;
+    JButton doneButton;
+
 
     public SingleFilePanel(File picture) throws IOException {
         System.out.println("DISPLAYING: " + picture.getAbsolutePath());
         this.image = new File(picture.getAbsolutePath());
+
         annotation = new Annotation(this.image);
     }
 

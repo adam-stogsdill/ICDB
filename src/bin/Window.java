@@ -138,6 +138,7 @@ public class Window extends JPanel {
                     JOptionPane.showMessageDialog(continueButton, "A FILE HAS NOT BEEN SELECTED!", "File Selection Error",
                             JOptionPane.WARNING_MESSAGE);
                 }else {
+                    Settings.setOutputLocation(projectOutputFile);
                     new AnnotationWindow(projectInputFile, projectOutputFile, projectInputFile.isDirectory());
                 }
             }
