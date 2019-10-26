@@ -8,7 +8,7 @@ public class Settings {
     public static boolean CONVERT_TO_MATRIX;
     public static String separator = ",";
     public static String fileLocation = "";
-
+    public static String[] CATEGORIES;
 
     public static void fullResetValues(){
         WHOLE_IMAGE = false;
@@ -23,7 +23,7 @@ public class Settings {
     }
 
     public static String[] buttonOptions(){
-        return new String[]{"TEST_BUTTON"};
+        return new String[]{};
     }
 
     public static void setOptionValue(String str, boolean value){
@@ -47,4 +47,5 @@ public class Settings {
 
     }
 
+    public static void setCATEGORIES(String[] categories) {CATEGORIES = categories;}
 }
