@@ -48,6 +48,7 @@ public class SingleFilePanel extends JPanel  {
 
         if(WindowHandler.annotationWindow.creatingBox){
             g.setColor(Color.CYAN);
+            System.out.println("Drawing BOX");
             g.drawRect(WindowHandler.annotationWindow.topX, WindowHandler.annotationWindow.topY, WindowHandler.annotationWindow.bottomX - WindowHandler.annotationWindow.topX, WindowHandler.annotationWindow.bottomY - WindowHandler.annotationWindow.topY);
         }
     }
